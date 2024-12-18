@@ -5,7 +5,14 @@ const Note = require('../models/notes')
 // Homepage - Get All Notes
 
 // Get a Note 
-
+router.get('/', async (req, res) => {
+    try {
+        const note = await Note.find()
+        res.status(200).json(note)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
 // Create a Note
 router.post('/', async (req, res) => {
     const note = new Note({
