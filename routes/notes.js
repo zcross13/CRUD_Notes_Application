@@ -3,8 +3,6 @@ const router = express.Router()
 const Note = require('../models/notes')
 
 // Homepage - Get All Notes
-
-// Get a Note 
 router.get('/', async (req, res) => {
     try {
         const note = await Note.find()
@@ -12,6 +10,12 @@ router.get('/', async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
+})
+
+// Get a Note 
+
+router.get('/:id', getNote, (req, res) => {
+    res.send(res.note)
 })
 // Create a Note
 router.post('/', async (req, res) => {
@@ -35,5 +39,21 @@ router.post('/', async (req, res) => {
 
 // Get a note middleware 
 
+async function getNote(req, res, next) {
+    let note
+    try {
+        note = await Note.findById(req.params.id)
+
+        if (!note) {
+            return res.status(404).json({ message: "User not found" });
+        }
+    } catch (err) {
+        return res.status(500).json({ message: "An error occurred while retrieving the user" })
+    }
+
+    res.note = note
+
+    next()
+}
 
 module.exports = router
