@@ -13,10 +13,10 @@ router.get('/', async (req, res) => {
 })
 
 // Get a Note 
-
 router.get('/:id', getNote, (req, res) => {
     res.send(res.note)
 })
+
 // Create a Note
 router.post('/', async (req, res) => {
     const note = new Note({
@@ -31,10 +31,29 @@ router.post('/', async (req, res) => {
     }
 })
 
-
-
 // Edit Note
+router.patch('/:id', getNote, async (req, res) => {
+    // Check if title is being updated
+    if (req.body.title != null) {
+        res.note.title = req.body.title;  // Update note title
+    }
 
+    // Check if content is being updated
+    if (req.body.content != null) {
+        res.note.content = req.body.content;  // Update note content
+    }
+
+    try {
+        // Save the updated note to the database
+        const updatedNote = await res.note.save();
+
+        // Send response indicating successful update
+        res.send({ message: "Note updated", updatedNote });
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ message: err.message });
+    }
+});
 // Delete Note
 
 // Get a note middleware 
