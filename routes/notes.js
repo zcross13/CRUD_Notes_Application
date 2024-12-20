@@ -55,6 +55,16 @@ router.patch('/:id', getNote, async (req, res) => {
     }
 });
 // Delete Note
+router.delete('/:id', getNote, async (req, res) => {
+    try {
+        await res.note.deleteOne()
+        res.json({ message: 'Delete user' })
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
+
 
 // Get a note middleware 
 
