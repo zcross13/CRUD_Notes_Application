@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Note = require('../models/notes')
 
-// Homepage - Get All Notes
+// Create a new note
 router.get('/', async (req, res) => {
     try {
         const note = await Note.find()
@@ -12,12 +12,12 @@ router.get('/', async (req, res) => {
     }
 })
 
-// Get a Note 
+// Get all notes 
 router.get('/:id', getNote, (req, res) => {
     res.send(res.note)
 })
 
-// Create a Note
+// Get a single note by ID
 router.post('/', async (req, res) => {
     const note = new Note({
         title: req.body.title,
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-// Edit Note
+// Update a note by ID
 router.patch('/:id', getNote, async (req, res) => {
     // Check if title is being updated
     if (req.body.title != null) {
@@ -54,7 +54,9 @@ router.patch('/:id', getNote, async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
-// Delete Note
+
+
+// Delete a note by ID
 router.delete('/:id', getNote, async (req, res) => {
     try {
         await res.note.deleteOne()
