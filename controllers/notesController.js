@@ -42,7 +42,7 @@ const updateNote = async (req, res) => {
         console.log(err);
         res.status(400).json({ message: err.message });
     }
-});
+}
 
 
 // Delete a note by ID
