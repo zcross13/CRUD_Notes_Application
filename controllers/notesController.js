@@ -38,6 +38,7 @@ const updateNote = async (req, res) => {
 
         // Send response indicating successful update
         res.send({ message: "Note updated", updatedNote });
+        res.status(200).json(profile)
     } catch (err) {
         console.log(err);
         res.status(400).json({ message: err.message });
