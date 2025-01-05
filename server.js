@@ -20,10 +20,18 @@ db.once('open', () => {
 
 app.use(express.json())
 
+const userRouter = require('./routes/users')
+const profileRouter = require('./routes/profile')
+const taskRouter = require('./routes/task')
 const notesRouter = require('./routes/notes')
+const teamRouter = require('./routes/team')
 
 
+app.use('/user', userRouter)
+app.use('/profile', profileRouter)
+app.use('/task', taskRouter)
 app.use('/notes', notesRouter)
+app.use('/team', teamRouter)
 
 
 app.listen(3000, () => {

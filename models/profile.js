@@ -1,10 +1,10 @@
-const mongoose = required('mongoose')
+const mongoose = require('mongoose')
 const { Schema, model } = mongoose
 
 const profileSchema = new Schema({
     //Basic User Information 
-    username: { type: String, required: true },
-    email: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     fullName: {
         first: { type: String, required: true },
@@ -18,6 +18,7 @@ const profileSchema = new Schema({
     tasksCreated: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
     tasksAssigned: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
     completedTaskCount: { type: Number, default: 0 },
+    notes: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
     //social/collaboration
     teams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
     followers: [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
@@ -29,9 +30,9 @@ const profileSchema = new Schema({
         sms: { type: Boolean, default: false },
         push: { type: Boolean, default: true }
     },
-    accountCreatedDate: [{ type: Date, default: Date.now }],
+    accountCreatedDate: { type: Date, default: Date.now },
     lastLoginDate: { type: Date },
     status: { type: String, default: "active", enum: ["active", "suspended", "deactivated"] },
 })
 
-module.exports = mongoose.exports('Profile', profileSchema)
+module.exports = model('Profile', profileSchema)
