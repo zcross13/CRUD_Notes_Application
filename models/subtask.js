@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema, model } = mongoose
 
-const subTaskSchema = new Schema({
+const subtaskSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -36,4 +36,4 @@ const subTaskSchema = new Schema({
     }
 }, { timestamps: true })
 
-module.exports = model('SubTask', subTaskSchema)
+module.exports = model('SubTask', subtaskSchema)
